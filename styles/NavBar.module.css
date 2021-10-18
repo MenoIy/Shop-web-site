@@ -1,0 +1,82 @@
+.NavBar {
+  display: flex;
+  flex-wrap: wrap;
+  height: 60px;
+  width: 100%;
+  font-size: 1.3rem;
+  align-items: center;
+  padding: 0px calc((100% - 1002px) / 2);
+  position: fixed;
+  top: 0;
+}
+
+.logo {
+  justify-content: flex-start;
+  color: rgb(223, 89, 89);
+}
+
+.logo i {
+  color: green;
+  margin-left: 5px;
+}
+
+.search {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 20px;
+}
+
+.search input {
+  height: 100%;
+  width: 90%;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  padding: 0 5px;
+}
+.search input:focus {
+  border: 1px rgb(164, 218, 209) solid;
+}
+
+.search button {
+  color: rgb(164, 218, 209);
+  border: none;
+  background: none;
+  font-size: 1.4rem;
+  margin-right: 5px;
+}
+
+.shoppingCart {
+  justify-content: flex-end;
+  color: rgb(164, 218, 209);
+}
+
+.user {
+  margin-left: 30px;
+  color: rgb(41, 46, 45);
+}
+
+.shoppingCart i,
+.user i {
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 1024px) {
+  .NavBar {
+    padding: 0 10px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .shoppingCart span,
+  .user span {
+    display: none;
+  }
+  .user {
+    margin-left: 20px;
+  }
+}
