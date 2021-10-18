@@ -7,8 +7,9 @@
   font-size: 1.3rem;
   align-items: center;
   position: fixed;
-  padding: 0 10px;
+  padding: 0 10px 10px 10px;
   top: 0;
+  border-bottom: 1px solid rgb(110, 117, 116);
 }
 
 .logo {
@@ -66,12 +67,6 @@
 .shoppingCart i,
 .user i {
   margin-right: 5px;
-}
-
-@media screen and (max-width: 1024px) {
-  .NavBar {
-    padding: 0 10px;
-  }
 }
 
 @media screen and (max-width: 1024px) {
