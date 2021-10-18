@@ -13,10 +13,10 @@ const NavBar = () => {
         </Link>
       </div>
       <form className={styles.search}>
+        <input placeholder="Search..." />
         <button type="submit">
           <span className="fas fa-search" />
         </button>
-        <input placeholder="Search..." />
       </form>
       <div className={styles.shoppingCart}>
         <Link href="/cart">

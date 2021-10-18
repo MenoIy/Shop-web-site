@@ -6,7 +6,6 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="description" content="E-commerce website with Next.js" />
-          <title>Pharmacy</title>
           <script
             src="https://kit.fontawesome.com/f38df1038d.js"
             crossOrigin="anonymous"
