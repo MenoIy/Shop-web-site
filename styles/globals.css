@@ -14,8 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.page_content {
-  padding: 0 calc((100% - 1002px) / 2);
-  margin-top: 70px;
-}
