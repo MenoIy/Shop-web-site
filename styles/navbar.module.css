@@ -44,6 +44,7 @@
 }
 
 .search button {
+  cursor: pointer;
   background-color: rgb(164, 218, 209);
   height: 80%;
   width: 60px;
@@ -55,11 +56,13 @@
 }
 
 .shoppingCart {
+  cursor: pointer;
   justify-content: flex-end;
   color: rgb(164, 218, 209);
 }
 
 .user {
+  cursor: pointer;
   margin-left: 30px;
   color: rgb(41, 46, 45);
 }
