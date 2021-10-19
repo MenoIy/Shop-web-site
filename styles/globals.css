@@ -1,3 +1,13 @@
+:root {
+  --powder-blue: #caf0f8;
+  --blizard-blue: #ade8f4;
+  --sky-blue: #48cae4;
+  --navy-blue: #03045e;
+  --star-blue: #0077b6;
+  --green-blue: #0096c7;
+  --cerulean-blue: #00b4d8;
+}
+
 html,
 body {
   padding: 0;
