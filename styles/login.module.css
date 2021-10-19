@@ -56,3 +56,18 @@
 .input_error input:focus {
   outline: rgb(255, 0, 0) solid 1px;
 }
+
+.redirect {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.redirect a {
+  cursor: pointer;
+  color: rgb(84, 189, 171);
+}
+
+.redirect a:hover {
+  font-weight: 550;
+  color: rgb(34, 172, 126);
+}

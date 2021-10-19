@@ -1,9 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-
 import styles from '../styles/login.module.css';
 
-const Login = () => {
+const Register = () => {
   return (
     <div className={styles.container}>
       <form>
@@ -15,14 +14,11 @@ const Login = () => {
           <input type="password" placeholder="Password" />
           <p className={styles.error}>Error</p>
         </div>
-        <button type="submit">Login</button>
-        <Link href="/forgot">
-          <a> Forgot password ?</a>
-        </Link>
+        <button type="submit">Register</button>
         <div className={styles.redirect}>
-          <p>{"Don't have an account ?"}</p>
-          <Link href="/register">
-            <a>Register</a>
+          <p>Already have an account ?</p>
+          <Link href="/login">
+            <a> Sign in</a>
           </Link>
         </div>
       </form>
@@ -30,4 +26,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

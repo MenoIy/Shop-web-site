@@ -27,7 +27,7 @@ const NavBar = () => {
         </Link>
       </div>
       <div className={styles.user}>
-        <Link href="\login">
+        <Link href="/login">
           <a>
             <i className="fas fa-user" />
             <span>Sign in</span>
