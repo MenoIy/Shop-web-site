@@ -12,6 +12,7 @@ interface CreateUser extends User {
 }
 
 const initialValues: CreateUser = {
+  name: '',
   email: '',
   password: '',
 };
@@ -32,6 +33,15 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
+        <div className={hasError('name') ? styles.input_error : styles.input}>
+          <input
+            name="name"
+            placeholder="Name"
+            onChange={handleChange}
+            value={values.name}
+          />
+          {hasError('name') && <p className={styles.error}>{errors.name}</p>}
+        </div>
         <div className={hasError('email') ? styles.input_error : styles.input}>
           <input
             name="email"
