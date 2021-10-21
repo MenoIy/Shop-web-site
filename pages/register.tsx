@@ -5,11 +5,9 @@ import styles from '../styles/login.module.css';
 
 import { User } from '../interfaces';
 import { registerSchema } from '../validators';
+import { register } from '../utils/users';
 
-interface CreateUser extends User {
-  password: string;
-  [id: string]: string;
-}
+type CreateUser = Omit<User, 'role'>;
 
 const initialValues: CreateUser = {
   name: '',
@@ -21,7 +19,8 @@ const Register = () => {
   const { errors, values, handleChange, handleSubmit, touched } = useFormik({
     initialValues,
     validationSchema: registerSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      await register(values).then((res) => console.log('here', res));
       console.log('values', values);
     },
   });
