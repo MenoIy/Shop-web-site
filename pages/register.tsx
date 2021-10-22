@@ -1,11 +1,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import styles from '../styles/login.module.css';
 
 import { User } from '../interfaces';
 import { registerSchema } from '../validators';
 import { register } from '../utils/users';
+import { redirect } from 'next/dist/server/api-utils';
 
 type CreateUser = Omit<User, 'role'>;
 
@@ -16,14 +18,25 @@ const initialValues: CreateUser = {
 };
 
 const Register = () => {
-  const { errors, values, handleChange, handleSubmit, touched } = useFormik({
+  const router = useRouter();
+
+  const formik = useFormik({
     initialValues,
     validationSchema: registerSchema,
     onSubmit: async (values) => {
-      await register(values).then((res) => console.log('here', res));
-      console.log('values', values);
+      await register(values)
+        .then(() => router.push('/login'))
+        .catch((error) => {
+          const err = error.response;
+          if (err.status == 500) {
+            throw new Error(err);
+          }
+          formik.setErrors(err.data);
+        });
     },
   });
+
+  const { errors, values, handleChange, handleSubmit, touched } = formik;
 
   function hasError(field: string): boolean {
     return !!errors[field] && !!touched[field];
