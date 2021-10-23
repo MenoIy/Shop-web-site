@@ -6,6 +6,10 @@
   --star-blue: #0077b6;
   --green-blue: #0096c7;
   --cerulean-blue: #00b4d8;
+  --succes: #47f764;
+  --error: #ff355b;
+  --info: #2f86eb;
+  --warning: #ffc021;
 }
 
 html,

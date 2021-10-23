@@ -3,6 +3,8 @@ import Head from 'next/head';
 
 import NavBar from './NavBar';
 import styles from '../styles/layout.module.css';
+import Notification from './Notification';
+import { NotificationProvider } from '../context/NotificationContext';
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -11,7 +13,10 @@ const Layout: React.FC = ({ children }) => {
         <title>Pharmacy</title>
       </Head>
       <NavBar />
-      {children}
+      <NotificationProvider>
+        <Notification />
+        {children}
+      </NotificationProvider>
     </div>
   );
 };
