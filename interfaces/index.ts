@@ -9,6 +9,5 @@ export interface User {
 export interface Notification {
   status: string;
   message: string;
-  autoDelete: boolean;
   id: number;
 }

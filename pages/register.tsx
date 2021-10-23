@@ -7,7 +7,7 @@ import styles from '../styles/login.module.css';
 import { User } from '../interfaces';
 import { registerSchema } from '../validators';
 import { register } from '../utils/users';
-import { redirect } from 'next/dist/server/api-utils';
+import { useNotificationDispatcher } from '../context/NotificationContext';
 
 type CreateUser = Omit<User, 'role'>;
 
@@ -19,13 +19,14 @@ const initialValues: CreateUser = {
 
 const Register = () => {
   const router = useRouter();
+  const notifDispatcher = useNotificationDispatcher();
 
   const formik = useFormik({
     initialValues,
     validationSchema: registerSchema,
     onSubmit: async (values) => {
       await register(values)
-        .then(() => router.push('/login'))
+        .then(() => registerSucces())
         .catch((error) => {
           const err = error.response;
           if (err.status == 500) {
@@ -35,6 +36,17 @@ const Register = () => {
         });
     },
   });
+
+  function registerSucces() {
+    router.push('/login');
+    notifDispatcher({
+      type: 'ADD',
+      notification: {
+        status: 'succes',
+        message: 'Account created successfully',
+      },
+    });
+  }
 
   const { errors, values, handleChange, handleSubmit, touched } = formik;
 

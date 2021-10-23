@@ -2,11 +2,10 @@ import React from 'react';
 import { Notification } from '../interfaces';
 
 type State = Notification[];
-type Setter = React.Dispatch<React.SetStateAction<State>>;
 type Action = {
   type: 'ADD' | 'DELETE';
   id?: number;
-  notification?: Notification;
+  notification?: { status: string; message: string };
 };
 
 const NotificationStateContext = React.createContext<State>([]);
@@ -24,7 +23,7 @@ const notificationReducer: React.Reducer<State, Action> = (
   switch (type) {
     case 'ADD': {
       if (notification) {
-        return [...state, notification];
+        return [...state, { ...notification, id: Date.now() }];
       }
       throw new Error('Must provide a notification for add action');
     }
@@ -66,7 +65,7 @@ export const useNotificationState = () => {
   return state;
 };
 
-export const useNotificationDispatch = () => {
+export const useNotificationDispatcher = () => {
   const dispatcher = React.useContext(NotificationDispatchContext);
 
   if (dispatcher === undefined) {

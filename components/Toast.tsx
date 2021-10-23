@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from '../styles/toast.module.css';
-import { useNotificationDispatch } from '../context/NotificationContext';
+import { useNotificationDispatcher } from '../context/NotificationContext';
 
 import { Notification } from '../interfaces';
 
@@ -12,19 +12,17 @@ const icones: { [key: string]: string } = {
 };
 
 const Toast = (props: Notification) => {
-  const { id, status, message, autoDelete } = props;
-  const dispatcher = useNotificationDispatch();
+  const { id, status, message } = props;
+  const dispatcher = useNotificationDispatcher();
 
   useEffect(() => {
     const intervall = setTimeout(() => {
-      if (autoDelete) {
-        dispatcher({ type: 'DELETE', id });
-      }
+      dispatcher({ type: 'DELETE', id });
     }, 1500);
     return () => {
       clearTimeout(intervall);
     };
-  }, [id, autoDelete, dispatcher]);
+  }, [id, dispatcher]);
 
   return (
     <>
