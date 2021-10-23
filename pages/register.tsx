@@ -27,13 +27,7 @@ const Register = () => {
     onSubmit: async (values) => {
       await register(values)
         .then(() => registerSucces())
-        .catch((error) => {
-          const err = error.response;
-          if (err.status == 500) {
-            throw new Error(err);
-          }
-          formik.setErrors(err.data);
-        });
+        .catch((error) => registerError(error));
     },
   });
 
@@ -46,6 +40,21 @@ const Register = () => {
         message: 'Account created successfully',
       },
     });
+  }
+
+  function registerError(err: any) {
+    const error = err.response;
+
+    if (error.status === 500) {
+      notifDispatcher({
+        type: 'ADD',
+        notification: {
+          status: 'error',
+          message: 'something went wrong',
+        },
+      });
+    }
+    formik.setErrors(error.data);
   }
 
   const { errors, values, handleChange, handleSubmit, touched } = formik;
