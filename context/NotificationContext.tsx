@@ -3,20 +3,53 @@ import { Notification } from '../interfaces';
 
 type State = Notification[];
 type Setter = React.Dispatch<React.SetStateAction<State>>;
+type Action = {
+  type: 'ADD' | 'DELETE';
+  id?: number;
+  notification?: Notification;
+};
 
 const NotificationStateContext = React.createContext<State>([]);
-const NotificationStateUpdater = React.createContext<Setter | undefined>(
-  undefined
-);
+
+const NotificationDispatchContext = React.createContext<
+  React.Dispatch<Action> | undefined
+>(undefined);
+
+const notificationReducer: React.Reducer<State, Action> = (
+  state: State,
+  action: Action
+) => {
+  const { type, notification, id } = action;
+
+  switch (type) {
+    case 'ADD': {
+      if (notification) {
+        return [...state, notification];
+      }
+      throw new Error('Must provide a notification for add action');
+    }
+
+    case 'DELETE': {
+      if (id) {
+        return state.filter((notification) => notification.id != id);
+      }
+      throw new Error('Must provide an id for delete action');
+    }
+
+    default: {
+      throw new Error(`Unhandled notification action type: ${type}`);
+    }
+  }
+};
 
 export const NotificationProvider = (props: { children: React.ReactNode }) => {
-  const [notifications, setNotifications] = React.useState<State>([]);
+  const [state, dispatch] = React.useReducer(notificationReducer, []);
 
   return (
-    <NotificationStateContext.Provider value={notifications}>
-      <NotificationStateUpdater.Provider value={setNotifications}>
+    <NotificationStateContext.Provider value={state}>
+      <NotificationDispatchContext.Provider value={dispatch}>
         {props.children}
-      </NotificationStateUpdater.Provider>
+      </NotificationDispatchContext.Provider>
     </NotificationStateContext.Provider>
   );
 };
@@ -33,14 +66,14 @@ export const useNotificationState = () => {
   return state;
 };
 
-export const useNotificationUpdater = () => {
-  const updater = React.useContext(NotificationStateUpdater);
+export const useNotificationDispatch = () => {
+  const dispatcher = React.useContext(NotificationDispatchContext);
 
-  if (updater === undefined) {
+  if (dispatcher === undefined) {
     throw new Error(
-      'useNotificationUpdater must be used inside a NotificationProvider'
+      'useNotificationDispatch must be used inside a NotificationProvider'
     );
   }
 
-  return updater;
+  return dispatcher;
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from '../styles/toast.module.css';
-import { useNotificationUpdater } from '../context/NotificationContext';
+import { useNotificationDispatch } from '../context/NotificationContext';
 
 import { Notification } from '../interfaces';
 
@@ -13,22 +13,18 @@ const icones: { [key: string]: string } = {
 
 const Toast = (props: Notification) => {
   const { id, status, message, autoDelete } = props;
-  const updater = useNotificationUpdater();
+  const dispatcher = useNotificationDispatch();
 
   useEffect(() => {
     const intervall = setTimeout(() => {
       if (autoDelete) {
-        deleteToast(id);
+        dispatcher({ type: 'DELETE', id });
       }
     }, 1500);
     return () => {
       clearTimeout(intervall);
     };
-  }, [id, autoDelete]);
-
-  const deleteToast = (id: number) => {
-    updater((prev) => prev.filter((notif) => notif.id != id));
-  };
+  }, [id, autoDelete, dispatcher]);
 
   return (
     <>
