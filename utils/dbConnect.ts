@@ -9,20 +9,17 @@ async function dbConnect() {
     );
   }
 
-  if (mongoose.connection) {
+  if (mongoose.connection.readyState) {
     console.log('already connected');
     return;
   }
 
   try {
-    mongoose.connect(MONGODB_URL, () =>
-      console.log('MongoDB connected successfully.')
-    );
+    await mongoose.connect(MONGODB_URL);
+    console.log('MongoDB connected successfully.');
   } catch (error) {
     console.log(`Can't connect to mongodb : ${error}`);
   }
-
-  return dbConnect;
 }
 
 export default dbConnect;

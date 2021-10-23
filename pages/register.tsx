@@ -1,11 +1,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import styles from '../styles/login.module.css';
 
 import { User } from '../interfaces';
 import { registerSchema } from '../validators';
 import { register } from '../utils/users';
+import { useNotificationDispatcher } from '../context/NotificationContext';
 
 type CreateUser = Omit<User, 'role'>;
 
@@ -16,14 +18,46 @@ const initialValues: CreateUser = {
 };
 
 const Register = () => {
-  const { errors, values, handleChange, handleSubmit, touched } = useFormik({
+  const router = useRouter();
+  const notifDispatcher = useNotificationDispatcher();
+
+  const formik = useFormik({
     initialValues,
     validationSchema: registerSchema,
     onSubmit: async (values) => {
-      await register(values).then((res) => console.log('here', res));
-      console.log('values', values);
+      await register(values)
+        .then(() => registerSucces())
+        .catch((error) => registerError(error));
     },
   });
+
+  function registerSucces() {
+    router.push('/login');
+    notifDispatcher({
+      type: 'ADD',
+      notification: {
+        status: 'succes',
+        message: 'Account created successfully',
+      },
+    });
+  }
+
+  function registerError(err: any) {
+    const error = err.response;
+
+    if (error.status === 500) {
+      notifDispatcher({
+        type: 'ADD',
+        notification: {
+          status: 'error',
+          message: 'something went wrong',
+        },
+      });
+    }
+    formik.setErrors(error.data);
+  }
+
+  const { errors, values, handleChange, handleSubmit, touched } = formik;
 
   function hasError(field: string): boolean {
     return !!errors[field] && !!touched[field];

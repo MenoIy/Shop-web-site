@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model, Model } from 'mongoose';
 import { User } from '../interfaces';
 
 const userSchema: Schema = new Schema<User>(
@@ -11,4 +11,5 @@ const userSchema: Schema = new Schema<User>(
   { timestamps: true }
 );
 
-export const userModel = model<User>('User', userSchema);
+export const userModel: Model<User> =
+  mongoose.models.User || model<User>('User', userSchema);
